@@ -154,6 +154,13 @@ public class MiniNetMain {
 	public void addAdult() {
 	    System.out.println("Enter Name");
 		name = keypad.getString();	
+		if(pdb.containsProfile(name) == true) 
+			do
+			{
+				System.out.println("Name exists");
+				System.out.println("Enter Name");
+				name = keypad.getString();
+			}while(pdb.containsProfile(name) == true);
 		do {
 		System.out.println("Enter Age - Must be greater than 16");
 		age = keypad.getInt();
@@ -219,20 +226,65 @@ public class MiniNetMain {
 		ArrayList<String> resultsList = new ArrayList<String>();
 		System.out.println("Enter Name");
 		name = keypad.getString();
+		if(pdb.containsProfile(name) == true) 
+		do
+		{
+			System.out.println("Name exists");
+			System.out.println("Enter Name");
+			name = keypad.getString();
+		}while(pdb.containsProfile(name) == true);
 		System.out.println("Enter Age - Must be less than 16 Greater than 2");
 		age = keypad.getInt();
 		System.out.println("Enter Status");
 		status = keypad.getString();
 		System.out.println("Enter name of parent one");
 		parent1 = keypad.getString();
-		if(pdb.getProfilesHashMap().containsKey(parent1)) {
-			parentOne = pdb.getProfile(parent1);
-		}
+		if(pdb.getProfilesHashMap().containsKey(parent1)) 
+			if(pdb.getProfilesHashMap().get(parent1) instanceof Adult)
+			{
+				parentOne = pdb.getProfile(parent1);
+			}
+			else if(pdb.getProfilesHashMap().get(parent1) instanceof Child)
+			{
+				do {
+				System.out.println("A parent must be an adult");
+				System.out.println("Enter name of parent one");
+				parent1 = keypad.getString();
+				}while(!(pdb.getProfilesHashMap().get(parent1) instanceof Adult));
+			}
+			else if(pdb.getProfilesHashMap().get(parent1) instanceof Baby)
+			{
+				do {
+					System.out.println("A parent must be an adult");
+					System.out.println("Enter name of parent one");
+					parent1 = keypad.getString();
+					}while(!(pdb.getProfilesHashMap().get(parent1) instanceof Adult));
+			}
+			
+		
 		System.out.println("Enter name of parent two");
 		parent2 = keypad.getString();
-		if(pdb.getProfilesHashMap().containsKey(parent2)) {
+		if(pdb.getProfilesHashMap().containsKey(parent2))
+			if(pdb.getProfilesHashMap().get(parent2) instanceof Adult)
+		{
 			parentTwo = pdb.getProfile(parent2);
 		}
+			else if(pdb.getProfilesHashMap().get(parent2) instanceof Child)
+			{
+				do {
+				System.out.println("A parent must be an adult");
+				System.out.println("Enter name of parent one");
+				parent2 = keypad.getString();
+				}while(!(pdb.getProfilesHashMap().get(parent2) instanceof Adult));
+			}
+			else if(pdb.getProfilesHashMap().get(parent2) instanceof Baby)
+			{
+				do {
+					System.out.println("A parent must be an adult");
+					System.out.println("Enter name of parent one");
+					parent1 = keypad.getString();
+					}while(!(pdb.getProfilesHashMap().get(parent2) instanceof Adult));
+			}
 //		A new child profile is created
 		if(pdb.getProfilesHashMap().containsKey(name) == false) {
 			Profile profile = new Child(name,image,status,age,(Adult)parentOne,(Adult)parentTwo);
@@ -266,24 +318,71 @@ public class MiniNetMain {
 			ArrayList<String> resultsList = new ArrayList<String>();
 			System.out.println("Enter Name");
 			name = keypad.getString();
+			if(pdb.containsProfile(name) == true) 
+				do
+				{
+					System.out.println("Name exists");
+					System.out.println("Enter Name");
+					name = keypad.getString();
+				}while(pdb.containsProfile(name) == true);
 			System.out.println("Enter Age - Must be less than 2");
 			age = keypad.getInt();
 			System.out.println("Enter Status");
 			status = keypad.getString();
 			System.out.println("Enter name of parent one");
 			parent1 = keypad.getString();
-			if(pdb.containsProfile(parent1)) {
-				parentOne = pdb.getProfile(parent1);
-			}
+			if(pdb.containsProfile(parent1))
+				if(pdb.getProfilesHashMap().get(parent1) instanceof Adult)
+					{
+						parentOne = pdb.getProfile(parent1);
+					}
+				else if(pdb.getProfilesHashMap().get(parent1) instanceof Child)
+					{
+						do {
+							System.out.println("A parent must be an adult");
+							System.out.println("Enter name of parent one");
+							parent1 = keypad.getString();
+						}while(!(pdb.getProfilesHashMap().get(parent1) instanceof Adult));
+					}
+				else if(pdb.getProfilesHashMap().get(parent1) instanceof Baby)
+					{
+						do {
+							System.out.println("A parent must be an adult");
+							System.out.println("Enter name of parent one");
+							parent1 = keypad.getString();
+						}while(!(pdb.getProfilesHashMap().get(parent1) instanceof Adult));
+					}
 			System.out.println("Enter name of parent two");
 			parent2 = keypad.getString();
-			if(pdb.containsProfile(parent2)) {
-				parentTwo = pdb.getProfile(parent2);
-			}
+			if(pdb.containsProfile(parent2)) 
+				if(pdb.getProfilesHashMap().get(parent2) instanceof Adult)
+				{
+					parentTwo = pdb.getProfile(parent2);
+				}
+				else if(pdb.getProfilesHashMap().get(parent2) instanceof Child)
+				{
+					do {
+					System.out.println("A parent must be an adult");
+					System.out.println("Enter name of parent one");
+					parent2 = keypad.getString();
+					}while(!(pdb.getProfilesHashMap().get(parent2) instanceof Adult));
+				}
+				else if(pdb.getProfilesHashMap().get(parent2) instanceof Baby)
+				{
+					do {
+						System.out.println("A parent must be an adult");
+						System.out.println("Enter name of parent one");
+						parent1 = keypad.getString();
+						}while(!(pdb.getProfilesHashMap().get(parent2) instanceof Adult));
+				}
+			
 			if(pdb.containsProfile(name) == false) {
 				Profile profile = new Baby(name,image,status,age,(Adult)parentOne,(Adult)parentTwo);
 				pdb.addProfile(profile);
-			}else {
+			}
+			else {
+				System.out.println("A profile with "+name+" already exists");
+				run();
 			}
 			resultsList = ((Baby)pdb.getProfile(name)).checkParents((Adult)parentOne, (Adult)parentTwo);
 			if(resultsList.contains("false")) {
